@@ -1,4 +1,4 @@
-package com.xearth.sp.seatonproject.dao;
+package com.xearth.sp.seatonproject.base;
 
 import org.springframework.data.jpa.repository.support.JpaRepositoryImplementation;
 import org.springframework.data.repository.NoRepositoryBean;

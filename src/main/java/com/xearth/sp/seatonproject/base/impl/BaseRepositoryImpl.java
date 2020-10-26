@@ -1,9 +1,8 @@
-package com.xearth.sp.seatonproject.dao.impl;
+package com.xearth.sp.seatonproject.base.impl;
 
-import com.xearth.sp.seatonproject.dao.BaseRepository;
+import com.xearth.sp.seatonproject.base.BaseRepository;
 import org.springframework.data.jpa.repository.support.JpaEntityInformation;
 import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
-import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;

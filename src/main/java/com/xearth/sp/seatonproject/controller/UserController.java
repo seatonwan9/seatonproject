@@ -6,6 +6,9 @@ import com.xearth.sp.seatonproject.pojo.User;
 import com.xearth.sp.seatonproject.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -49,7 +52,7 @@ public class UserController {
      * @param response
      * @return
      */
-    @GetMapping("/findAllByPage")
+    @GetMapping("/findAllByPageSize")
     public Page<User> findAllByPage(Integer page, Integer size, HttpServletResponse response) {
         //处理跨域请求
         response.setHeader("Access-Control-Allow-Origin","*");
@@ -62,7 +65,8 @@ public class UserController {
         if(size == null) {
             size = 5;
         }
-        return  userService.findAllByPage(page, size);
+        Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC,"datetime"));
+        return  userService.findAllByPageSize(pageable);
     }
 
     /**
