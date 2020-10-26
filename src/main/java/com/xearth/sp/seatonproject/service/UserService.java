@@ -10,4 +10,13 @@ public interface UserService {
     List<User> findAll();
 
     Page<User> findAllByPage(int page, int size);
+
+    void save(User user);
+
+    void saveAll(List<User> user);
+
+    void batchInsert(List<User> user);
+
+    void batchUpdate(List<User> user);
+
 }

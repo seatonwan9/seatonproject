@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xearth.sp.seatonproject.dao.RiskDetailsMapper">
+  <resultMap id="BaseResultMap" type="com.xearth.sp.seatonproject.pojo.RiskDetails">
+    <constructor>
+      <idArg column="id" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="risk_id" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="type" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="detail_code" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="detail_desc" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="score" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="is_full" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="datetime" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, risk_id, type, detail_code, detail_desc, score, is_full, datetime
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from risk_details
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from risk_details
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.xearth.sp.seatonproject.pojo.RiskDetails">
+    insert into risk_details (id, risk_id, type, 
+      detail_code, detail_desc, score, 
+      is_full, datetime)
+    values (#{id,jdbcType=VARCHAR}, #{riskId,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR},
+      #{detail_code,jdbcType=INTEGER}, #{detail_desc,jdbcType=VARCHAR}, #{score,jdbcType=INTEGER}, 
+      #{isFull,jdbcType=INTEGER}, #{datetime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.xearth.sp.seatonproject.pojo.RiskDetails">
+    insert into risk_details
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="riskId != null">
+        risk_id,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="detail_code != null">
+        detail_code,
+      </if>
+      <if test="detail_desc != null">
+        detail_desc,
+      </if>
+      <if test="score != null">
+        score,
+      </if>
+      <if test="isFull != null">
+        is_full,
+      </if>
+      <if test="datetime != null">
+        datetime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="riskId != null">
+        #{riskId,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="detail_code != null">
+        #{detail_code,jdbcType=INTEGER},
+      </if>
+      <if test="detail_desc != null">
+        #{detail_desc,jdbcType=VARCHAR},
+      </if>
+      <if test="score != null">
+        #{score,jdbcType=INTEGER},
+      </if>
+      <if test="isFull != null">
+        #{isFull,jdbcType=INTEGER},
+      </if>
+      <if test="datetime != null">
+        #{datetime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.xearth.sp.seatonproject.pojo.RiskDetails">
+    update risk_details
+    <set>
+      <if test="riskId != null">
+        risk_id = #{riskId,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="detail_code != null">
+        detail_code = #{detail_code,jdbcType=INTEGER},
+      </if>
+      <if test="detail_desc != null">
+        detail_desc = #{detail_desc,jdbcType=VARCHAR},
+      </if>
+      <if test="score != null">
+        score = #{score,jdbcType=INTEGER},
+      </if>
+      <if test="isFull != null">
+        is_full = #{isFull,jdbcType=INTEGER},
+      </if>
+      <if test="datetime != null">
+        datetime = #{datetime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.xearth.sp.seatonproject.pojo.RiskDetails">
+    update risk_details
+    set risk_id = #{riskId,jdbcType=VARCHAR},
+      type = #{type,jdbcType=VARCHAR},
+      detail_code = #{detail_code,jdbcType=INTEGER},
+      detail_desc = #{detail_desc,jdbcType=VARCHAR},
+      score = #{score,jdbcType=INTEGER},
+      is_full = #{isFull,jdbcType=INTEGER},
+      datetime = #{datetime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

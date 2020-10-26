@@ -14,13 +14,13 @@ public class User {
 
     private Integer age;
 
-    private Date datatime;
+    private Date datetime;
 
-    public User(Integer id, String name, Integer age, Date datatime) {
+    public User(Integer id, String name, Integer age, Date datetime) {
         this.id = id;
         this.name = name;
         this.age = age;
-        this.datatime = datatime;
+        this.datetime = datetime;
     }
 
     public User() {
@@ -51,12 +51,12 @@ public class User {
         this.age = age;
     }
 
-    public Date getDatatime() {
-        return datatime;
+    public Date getdatetime() {
+        return datetime;
     }
 
-    public void setDatatime(Date datatime) {
-        this.datatime = datatime;
+    public void setdatetime(Date datetime) {
+        this.datetime = datetime;
     }
 
     @Override
@@ -65,7 +65,7 @@ public class User {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", age=" + age +
-                ", datatime=" + datatime +
+                ", datetime=" + datetime +
                 '}';
     }
 

@@ -1,0 +1,40 @@
+server:
+  #端口
+  port: 8080
+  #地址
+  servlet:
+    context-path: /seatonProject
+
+spring:
+  datasource:
+    driver-class-name : com.mysql.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/db_seaton?useSSL=false&useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
+    username: root
+#    password: root
+    password: Fn72Lvv6ZPk04DOKtO3Ge70YjXT9rHiMAM5r26dlNYy1GVlqhgHj5o84BuHqaiqIQ0Kf+ab7+p+5+DdJHIw10g==
+    type: com.alibaba.druid.pool.DruidDataSource
+    publickey: MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAON3LxncleASClr78VZy2LoECAZ+8oYjv41AlWtb/7uFRP6/lu1CNcbrzp6tHkzU1n6ZvDX6EVoYZ4pkLKPg7vkCAwEAAQ==
+    druid:
+      filter:
+        config:
+          enabled: true
+      connection-properties: config.decrypt=true;config.decrypt.key=${spring.datasource.publickey}
+
+    #连接池配置
+    initialSize: 20
+    minIdle: 50
+    maxActive: 500
+
+  #JPA、生成表结构、数据库方言等配置
+  jpa:
+    properties:
+      hibernate:
+        hbm2ddl:
+          auto: update
+        dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+      enable_lazy_load_no_trans: true
+    show-sql: true
+
+  thymeleaf:
+    prefix: classpath:/templates/
+    suffix: .html

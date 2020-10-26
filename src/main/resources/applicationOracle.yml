@@ -1,0 +1,29 @@
+server:
+  #端口
+  port: 8080
+  #地址
+  servlet:
+    context-path: /seatonProject
+
+spring:
+  #数据源配置
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driverClassName: oracle.jdbc.OracleDriver
+    url: jdbc:oracle:thin:@121.42.26.70:6521:orcl
+    username: mgys
+    password: 123456
+#    initialSize: 20
+#    minIdle: 50
+#    maxActive: 500
+
+  #JPA、生成表结构、数据库方言等配置
+  jpa:
+    properties:
+      hibernate:
+#        hbm2ddl:
+#          auto: update
+        dialect: org.hibernate.dialect.Oracle10gDialect
+      enable_lazy_load_no_trans: true
+    show-sql: true
+
