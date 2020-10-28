@@ -35,6 +35,11 @@ spring:
       enable_lazy_load_no_trans: true
     show-sql: true
 
-  thymeleaf:
-    prefix: classpath:/templates/
+  freemarker:
     suffix: .html
+    template-loader-path: classpath:/templates/
+
+  mvc:
+    static-path-pattern: /static/**
+    resources:
+      static-locations: classpath:/static/

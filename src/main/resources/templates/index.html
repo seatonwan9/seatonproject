@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Spring Boot Demo - FreeMarker</title>
+
+    <link href="../static/css/index.css" rel="stylesheet" />
+    <script src="../static/js/index.js"></script>
+</head>
+<body>
+    <button onclick="connectWebSocket()">连接WebSocket</button>
+    <button onclick="closeWebSocket()">断开连接</button>
+    用户名：<input id="nickName" type="text" />
+    <hr />
+    <br />
+    消息：<input id="text" type="text" />
+    <button onclick="send()">发送消息</button>
+    <div id="message"></div>
+</body>
+</html>

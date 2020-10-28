@@ -4,6 +4,7 @@ import com.xearth.sp.seatonproject.base.impl.BaseRepositoryImpl;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.web.socket.config.annotation.EnableWebSocket;
 
 /**
  * 项目启动类
@@ -13,6 +14,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @SpringBootApplication
 //@MapperScan("com.xearth.sp.seatonproject.dao")
 @EnableJpaRepositories(repositoryBaseClass = BaseRepositoryImpl.class)
+@EnableWebSocket
 public class SeatonprojectApplication {
 
     public static void main(String[] args) {

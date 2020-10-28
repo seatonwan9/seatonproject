@@ -8,10 +8,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * @date 2020/5/15 14:28
  */
 @Controller
+@RequestMapping("/arcgis")
 public class MapController {
 
     @RequestMapping("/map")
     public String map() {
-        return "hello";
+        return "map";
     }
 }
