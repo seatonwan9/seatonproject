@@ -4,13 +4,14 @@ import com.xearth.sp.seatonproject.pojo.Risk;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.jpa.repository.support.JpaRepositoryImplementation;
 import org.springframework.stereotype.Repository;
 
 import java.util.Date;
 import java.util.List;
 
 @Repository
-public interface RiskMapper extends JpaRepository<Risk,Integer> {
+public interface RiskMapper extends JpaRepositoryImplementation<Risk,Integer> {
 
     List<Risk> findAllById(String id);
 

@@ -1,13 +1,9 @@
 package com.xearth.sp.seatonproject.service.impl;
 
-import com.xearth.sp.seatonproject.pojo.UserInfo;
 import org.springframework.stereotype.Component;
 
 import javax.websocket.*;
-import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.concurrent.CopyOnWriteArraySet;
 
 /**
@@ -19,7 +15,7 @@ import java.util.concurrent.CopyOnWriteArraySet;
 public class WebSocketConnect {
 
     // 用来存放每个客户端对应的MyWebSocket对象。
-    private static CopyOnWriteArraySet<WebSocketConnect> webSocketSet = new CopyOnWriteArraySet<WebSocketConnect>();
+    private static CopyOnWriteArraySet<WebSocketConnect> webSocketSet = new CopyOnWriteArraySet<>();
     // 与某个客户端的连接会话，需要通过它来给客户端发送数据
     private Session session;
 
