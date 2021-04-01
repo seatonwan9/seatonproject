@@ -1,4 +1,4 @@
-package com.xearth.sp.seatonproject.service.impl;
+package com.xearth.sp.seatonproject.component;
 
 import com.xearth.sp.seatonproject.pojo.UserInfo;
 import org.springframework.stereotype.Component;
@@ -16,10 +16,10 @@ import java.util.concurrent.CopyOnWriteArraySet;
  */
 @ServerEndpoint(value = "/websocket/{nickName}")
 @Component
-public class MyWebSocket {
+public class WebSocket {
 
     // 用来存放每个客户端对应的MyWebSocket对象。
-    private static CopyOnWriteArraySet<MyWebSocket> webSocketSet = new CopyOnWriteArraySet<MyWebSocket>();
+    private static CopyOnWriteArraySet<WebSocket> webSocketSet = new CopyOnWriteArraySet<WebSocket>();
     // 用session作为key，保存用户信息
     private static Map<Session, UserInfo> connectmap = new HashMap<>();
     // 与某个客户端的连接会话，需要通过它来给客户端发送数据
@@ -77,8 +77,8 @@ public class MyWebSocket {
      * 群发自定义消息
      */
     public void broadcast(String message){
-        for (MyWebSocket item : webSocketSet) {
-            // getAsyncRemote()和getBasicRemote()是异步与同步的区别
+        for (WebSocket item : webSocketSet) {
+            /* getAsyncRemote()和getBasicRemote()是异步与同步的区别 */
 //            this.session.getBasicRemote().sendText(message);
             item.session.getAsyncRemote().sendText(message);//异步发送消息.
         }

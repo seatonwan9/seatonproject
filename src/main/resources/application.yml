@@ -1,6 +1,6 @@
 server:
   #端口
-  port: 8080
+  port: 8089
   #地址
   servlet:
     context-path: /seatonProject
@@ -42,4 +42,4 @@ spring:
   mvc:
     static-path-pattern: /static/**
     resources:
-      static-locations: classpath:/static/
+      static-locations: classpath:/static

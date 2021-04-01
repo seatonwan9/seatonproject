@@ -3,8 +3,6 @@ package com.xearth.sp.seatonproject.controller;
 import com.xearth.sp.seatonproject.controller.constructor.Parent;
 import com.xearth.sp.seatonproject.controller.constructor.Subparent;
 import com.xearth.sp.seatonproject.controller.constructor.Subtine;
-import com.xearth.sp.seatonproject.service.impl.WebSocketConnect;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
@@ -23,19 +21,6 @@ public class WebController {
     public ModelAndView index() {
         ModelAndView view = new ModelAndView("index");
         return view;
-    }
-
-    @RequestMapping("test")
-    public ModelAndView test() {
-        ModelAndView view = new ModelAndView("test");
-        return view;
-    }
-
-    @GetMapping(value = "send")
-    public String send() {
-        WebSocketConnect webSocketConnect = new WebSocketConnect();
-        webSocketConnect.onMessage("测试");
-        return "Success";
     }
 
     /**

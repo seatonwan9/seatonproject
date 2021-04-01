@@ -1,10 +1,12 @@
+
 var websocket = null;
+
 function connectWebSocket() {
     // 判断当前浏览器是否支持WebSocket
     if ('WebSocket' in window) {
         var nickName = document.getElementById('nickName').value;
-        console.log("ws://localhost:8080/seatonProject/websocket/" + nickName);
-        websocket = new WebSocket("ws://localhost:8080/seatonProject/websocket/" + nickName);
+        console.log("ws://localhost:8089/seatonProject/websocket/" + nickName);
+        websocket = new WebSocket("ws://localhost:8089/seatonProject/websocket/" + nickName);
     } else {
         alert('当前浏览器不支持websocket');
     }
