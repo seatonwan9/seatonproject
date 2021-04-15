@@ -4,21 +4,23 @@ import java.io.*;
 
 public class FileOutputAndInput {
     public static void main(String[] args) throws IOException {
-//        fileOutput(); // 输出
-//        fileInput(); // 输入
+        File file = new File("D:/test.txt");
+        fileOutput(file); // 输出
+        fileInput(file); // 输入
 
-        try{
+        // 测试异常类
+        /*try{
             int a[] = new int[2];
             System.out.println("Access element three :" + a[3]);
         }catch(RuntimeException e){
             System.out.println("Exception thrown  :" + e);
         }
-        System.out.println("Out of the block");
+        System.out.println("Out of the block");*/
     }
 
-    public static void fileOutput() throws IOException {
+    public static void fileOutput(File file) throws IOException {
         // 创建文件
-        FileOutputStream fop = new FileOutputStream("D:/test.txt");
+        FileOutputStream fop = new FileOutputStream(file);
         // 设置输出编码
         OutputStreamWriter writer = new OutputStreamWriter(fop, "UTF-8");
 
@@ -43,8 +45,8 @@ public class FileOutputAndInput {
         fop.close();
     }
 
-    public static void fileInput() throws IOException {
-        FileInputStream fip = new FileInputStream("D:/test.txt");
+    public static void fileInput(File file) throws IOException {
+        FileInputStream fip = new FileInputStream(file);
         InputStreamReader reader = new InputStreamReader(fip,"UTF-8");
 
         StringBuffer sb = new StringBuffer();
