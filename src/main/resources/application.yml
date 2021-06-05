@@ -1,29 +1,16 @@
 server:
   #端口
-  port: 8089
+  port: 8090
   #地址
   servlet:
-    context-path: /seatonProject
+    context-path: /seaton
 
 spring:
   datasource:
-    driver-class-name : com.mysql.jdbc.Driver
-    url: jdbc:mysql://127.0.0.1:3306/db_seaton?useSSL=false&useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
+    driver-class-name : com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/db_seaton?useSSL=false&useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&failOverReadOnly=false&serverTimezone=Asia/Shanghai
     username: root
-#    password: root
-    password: Fn72Lvv6ZPk04DOKtO3Ge70YjXT9rHiMAM5r26dlNYy1GVlqhgHj5o84BuHqaiqIQ0Kf+ab7+p+5+DdJHIw10g==
-    type: com.alibaba.druid.pool.DruidDataSource
-    publickey: MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAON3LxncleASClr78VZy2LoECAZ+8oYjv41AlWtb/7uFRP6/lu1CNcbrzp6tHkzU1n6ZvDX6EVoYZ4pkLKPg7vkCAwEAAQ==
-    druid:
-      filter:
-        config:
-          enabled: true
-      connection-properties: config.decrypt=true;config.decrypt.key=${spring.datasource.publickey}
-
-    #连接池配置
-    initialSize: 20
-    minIdle: 50
-    maxActive: 500
+    password: root
 
   #JPA、生成表结构、数据库方言等配置
   jpa:
@@ -43,3 +30,26 @@ spring:
     static-path-pattern: /static/**
     resources:
       static-locations: classpath:/static
+
+  # Redis 配置
+  cache:
+    type: redis
+
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    password:
+    #Redis数据库索引（默认为0）
+    database: 5
+    #连接超时时间（毫秒）
+    timeout: 6000
+    lettuce:
+      pool:
+        #连接池中的最大空闲连接
+        max-idle: 8
+        #连接池中的最小空闲连接
+        min-idle: 0
+        #连接池最大连接数（使用负值表示没有限制）
+        max-active: 8
+        #连接池最大阻塞等待时间（使用负值表示没有限制）
+        max-wait: -1

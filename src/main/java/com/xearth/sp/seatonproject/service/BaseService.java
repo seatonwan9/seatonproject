@@ -1,4 +1,4 @@
-package com.xearth.sp.seatonproject.base;
+package com.xearth.sp.seatonproject.service;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

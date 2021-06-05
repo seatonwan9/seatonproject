@@ -1,72 +1,81 @@
 package com.xearth.sp.seatonproject.pojo;
 
 import javax.persistence.*;
-import java.util.Date;
 
 @Entity
 @Table(name = "user")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Integer userId;
 
-    private String name;
+    private Integer companyId;
 
-    private Integer age;
+    private String userName;
 
-    private Date datetime;
+    private Integer userAge;
 
-    public User(Integer id, String name, Integer age, Date datetime) {
-        this.id = id;
-        this.name = name;
-        this.age = age;
-        this.datetime = datetime;
-    }
+    private String userPhone;
 
     public User() {
-        super();
     }
 
-    public Integer getId() {
-        return id;
+    public User(Integer userId, Integer companyId, String userName, Integer userAge, String userPhone) {
+        this.userId = userId;
+        this.companyId = companyId;
+        this.userName = userName;
+        this.userAge = userAge;
+        this.userPhone = userPhone;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public Integer getUserId() {
+        return userId;
     }
 
-    public String getName() {
-        return name;
+    public void setUserId(Integer userId) {
+        this.userId = userId;
     }
 
-    public void setName(String name) {
-        this.name = name == null ? null : name.trim();
+    public Integer getCompanyId() {
+        return companyId;
     }
 
-    public Integer getAge() {
-        return age;
+    public void setCompanyId(Integer companyId) {
+        this.companyId = companyId;
     }
 
-    public void setAge(Integer age) {
-        this.age = age;
+    public String getUserName() {
+        return userName;
     }
 
-    public Date getdatetime() {
-        return datetime;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
-    public void setdatetime(Date datetime) {
-        this.datetime = datetime;
+    public Integer getUserAge() {
+        return userAge;
+    }
+
+    public void setUserAge(Integer userAge) {
+        this.userAge = userAge;
+    }
+
+    public String getUserPhone() {
+        return userPhone;
+    }
+
+    public void setUserPhone(String userPhone) {
+        this.userPhone = userPhone;
     }
 
     @Override
     public String toString() {
         return "User{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", age=" + age +
-                ", datetime=" + datetime +
+                "userId=" + userId +
+                ", companyId=" + companyId +
+                ", userName='" + userName + '\'' +
+                ", userAge=" + userAge +
+                ", userPhone='" + userPhone + '\'' +
                 '}';
     }
-
 }

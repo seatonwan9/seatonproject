@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.xearth.sp.seatonproject.dao.UserMapper">
+<mapper namespace="com.xearth.sp.seatonproject.dao.UserDao">
   <resultMap id="BaseResultMap" type="com.xearth.sp.seatonproject.pojo.User">
     <constructor>
       <idArg column="id" javaType="java.lang.Integer" jdbcType="INTEGER" />

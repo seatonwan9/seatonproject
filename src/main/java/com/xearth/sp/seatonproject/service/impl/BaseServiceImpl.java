@@ -1,6 +1,6 @@
-package com.xearth.sp.seatonproject.base.impl;
+package com.xearth.sp.seatonproject.service.impl;
 
-import com.xearth.sp.seatonproject.base.BaseService;
+import com.xearth.sp.seatonproject.service.BaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
