@@ -1,1 +1,1 @@
-# seatonproject
+# my project for study
