@@ -2,6 +2,7 @@ package com.xearth.sp.seatonproject.dao;
 
 import com.xearth.sp.seatonproject.pojo.User;
 import com.xearth.sp.seatonproject.pojo.projection.UserProjection;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -25,15 +26,18 @@ public interface UserDao extends BaseRepository<User, Integer> {
      * @Query("select u.id as id, u.name as name, u.age as age from User u")
      * 2.当使用原生SQL映射（接口VO）时，字段也必须使用as重命名（备注：日期等类型可以在sql中使用to_char转换类型，否则投影报错）
      */
-    @Query(value = "select u.user_name, u.user_age c.companyName " +
-                    "from user u, company c " +
-                    "where u.company_id = c.company_id", nativeQuery = true)
+    @Query(value = "SELECT " +
+            "u.user_name AS userName, " +
+            "u.user_age AS userAge, " +
+            "c.companyName AS companyName " +
+            "FROM user AS u, company AS c " +
+            "WHERE u.company_id = c.company_id", nativeQuery = true)
     List<UserProjection> findAllUser();
 
-    @Query("select u " +
-            "from User u " +
-            "where 1=1 " +
-            "and (:userName is null or :userName = '' or u.userName = :userName)")
-    List<User> findUsersByUserName(@Param("userName") String userName, Pageable pageable);
+    @Query(value = "SELECT u " +
+            "FROM User AS u " +
+            "WHERE 1=1 " +
+            "AND (:userName IS NULL OR :userName = '' OR u.userName = :userName)")
+    Page<User> findUsersByParamByPageable(@Param("userName") String userName, Pageable pageable);
 
 }

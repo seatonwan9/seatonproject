@@ -5,6 +5,7 @@ import com.xearth.sp.seatonproject.pojo.User;
 import com.xearth.sp.seatonproject.pojo.projection.UserProjection;
 import com.xearth.sp.seatonproject.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -35,9 +36,11 @@ public class UserServiceImpl extends BaseServiceImpl<UserDao, User, Integer> imp
     }
 
     @Override
-    public List<User> findUsersByUserName(String userName, Integer page, Integer size) {
+    public Page<User> findUsersByParamByPageable(String userName, Integer page, Integer size) {
+        page = page == null || page <= 0 ? 0 : page -1;
+        size = size == null ? 5 : size;
         Pageable pageable = PageRequest.of(page, size);
-        return userDao.findUsersByUserName(userName, pageable);
+        return userDao.findUsersByParamByPageable(userName, pageable);
     }
 
 }

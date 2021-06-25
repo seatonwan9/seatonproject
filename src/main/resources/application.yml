@@ -1,6 +1,6 @@
 server:
   #端口
-  port: 8090
+  port: 8080
   #地址
   servlet:
     context-path: /seaton

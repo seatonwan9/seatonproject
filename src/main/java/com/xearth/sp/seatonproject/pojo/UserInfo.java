@@ -1,14 +1,17 @@
 package com.xearth.sp.seatonproject.pojo;
 
 /**
- * @program: websocket->UserInfo
+ * @program: websocket -> UserInfo
  * @description: 用户信息
  * @author wangxudong
  * @date 2020/10/28 13:53
  */
 public class UserInfo {
+
     private String id;
+
     private String nickName;
+
     private String password;
 
     public UserInfo() {

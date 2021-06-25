@@ -6,10 +6,13 @@ import javax.persistence.*;
 @Table(name = "company")
 public class Company {
     @Id
+    @Column(name = "company_id")
     private Integer companyId;
 
+    @Column(name = "company_name")
     private String companyName;
 
+    @Column(name = "company_address")
     private Integer companyAddress;
 
     public Company() {

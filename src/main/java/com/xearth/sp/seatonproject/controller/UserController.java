@@ -1,23 +1,18 @@
 package com.xearth.sp.seatonproject.controller;
 
 import com.xearth.sp.seatonproject.pojo.User;
-import com.xearth.sp.seatonproject.pojo.UserView;
 import com.xearth.sp.seatonproject.pojo.projection.UserProjection;
 import com.xearth.sp.seatonproject.result.JSONResult;
 import com.xearth.sp.seatonproject.service.RedisService;
 import com.xearth.sp.seatonproject.service.UserService;
-import com.xearth.sp.seatonproject.service.UserViewService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
 
 /**
  * @author wangxudong
@@ -25,20 +20,20 @@ import java.util.concurrent.Future;
  */
 @RestController
 @RequestMapping("/user")
-@Api(value = "用户类", tags = "用户信息接口")
+@Api(value = "用户信息", tags = "用户信息接口")
 public class UserController {
 
     @Autowired
     UserService userService;
-    @Autowired
-    UserViewService userViewService;
+
     @Autowired
     RedisService redisService;
 
     /**
-     * 排序查询所有用户
+     * 实体类查询所有用户
      * @return
      */
+    @ApiOperation(value = "实体类查询所有用户", notes = "")
     @GetMapping(value = "/findAll")
     public List<User> findAll() {
         List<User> list = userService.findAll();
@@ -46,22 +41,13 @@ public class UserController {
     }
 
     /**
-     * 投影查询用户
+     * 投影查询所有用户
      * @return
      */
+    @ApiOperation(value = "实体类查询所有用户", notes = "")
     @GetMapping(value = "/findAllUser")
     public List<UserProjection> findAllUser() {
         List<UserProjection> list = userService.findAllUser();
-        return list;
-    }
-
-    /**
-     * 查询用户视图表
-     * @return
-     */
-    @GetMapping(value = "/findAllUserView")
-    public List<UserView> findAllUserView() {
-        List<UserView> list = userViewService.findAll();
         return list;
     }
 
@@ -73,43 +59,29 @@ public class UserController {
      * @return
      */
     @ApiOperation(value = "分页条件查询用户", notes = "传入参数userName，参数可为空")
-    @PostMapping("/findUsersByUserName")
-    public JSONResult findUsersByUserName(@RequestParam(required = false) String userName,
-                                          Integer page, Integer size) {
-        if (page == null || page <= 0) {
-            page = 0;
-        } else {
-            page -= 1;
-        }
-        if (size == null) {
-            size = 5;
-        }
-        List<User> userList = userService.findUsersByUserName(userName, page, size);
-        return  JSONResult.success(userList);
-    }
-
-    /**
-     * 插入用户
-     */
-    @PostMapping(value = "/insertUser")
-    public void insertUser() {
-        User user = new User();
-        user.setUserName("wxd");
-        user.setUserAge(18);
-        userService.save(user);
+    @PostMapping("/findUsersByParamByPageable")
+    public JSONResult findUsersByParamByPageable(
+            @RequestParam(required = false) String userName,
+            @RequestParam(required = false) Integer page,
+            @RequestParam(required = false) Integer size) {
+        Page<User> list = userService.findUsersByParamByPageable(userName, page, size);
+        return  JSONResult.success(list);
     }
 
     /**
      * 批量插入用户
      */
-    @PostMapping(value = "/insertUsers")
-    public void insertUsers() {
+    @ApiOperation(value = "批量新增", notes = "")
+    @PostMapping(value = "/saveAll")
+    public void saveAll() {
         Long startTime = System.currentTimeMillis();
         List<User> userList = new ArrayList<>();
         for(int i = 0; i < 100; i++) {
             User user = new User();
-            user.setUserName("wxd" + i);
-            user.setUserAge(18 + i);
+            user.setCompanyId(100001);
+            user.setUserName("seaton" + i);
+            user.setUserAge(25);
+            user.setUserPhone("15101660166");
             userList.add(user);
         }
         userService.saveAll(userList);
@@ -121,14 +93,17 @@ public class UserController {
     /**
      * 批量插入用户自定义
      */
+    @ApiOperation(value = "批量新增（优化）", notes = "")
     @PostMapping(value = "/batchInsert")
     public void batchInsert() {
         Long startTime = System.currentTimeMillis();
         List<User> userList = new ArrayList<>();
         for(int i = 0; i < 100; i++) {
             User user = new User();
-            user.setUserName("wxd" + i);
-            user.setUserAge(18 + i);
+            user.setCompanyId(100001);
+            user.setUserName("seaton" + i);
+            user.setUserAge(25);
+            user.setUserPhone("15101660166");
             userList.add(user);
         }
         userService.batchInsert(userList);
@@ -138,60 +113,27 @@ public class UserController {
     }
 
     /**
-     * Redis缓存结果
+     * Redis缓存对象
      * @return
      */
-    @GetMapping(value = "/setObject")
-    public String setObject() {
-        List<User> userList = findAll();
-        for(int i = 0, len = userList.size(); i < len; i++) {
-            redisService.set("" + userList.get(i).getUserId(), userList.get(i));
+    @ApiOperation(value = "Redis缓存对象", notes = "")
+    @GetMapping(value = "/setCacheData")
+    public String setCacheData() {
+        List<User> list = findAll();
+        for(int i = 0, len = list.size(); i < len; i++) {
+            redisService.set("" + list.get(i).getUserId(), list.get(i));
         }
         return "success";
     }
 
     /**
-     * Redis查询缓存结果
+     * 根据key查询Redis缓存对象
      * @param key
      * @return
      */
-    @GetMapping(value = "/getObject")
-    public Object getObject(String key) {
+    @GetMapping(value = "/getCacheData")
+    public Object getCacheData(String key) {
         return redisService.get(key);
     }
 
-    /**
-     * 多线程计算测试
-     * @param args
-     * @throws ExecutionException
-     * @throws InterruptedException
-     */
-    public static void main(String[] args) throws ExecutionException, InterruptedException {
-        Long startTime = System.currentTimeMillis();
-        // 创建线程池对象
-        ExecutorService threadPool = Executors.newFixedThreadPool(2);
-
-        // 创建一个Callable接口子类对象
-        MyCallable c = new MyCallable(5000, 2000);
-        MyCallable c2 = new MyCallable(3000, 2000);
-
-        // 获取线程池中的线程，调用Callable接口子类对象中的call()方法, 完成求和操作
-        // Future<Integer> submit(Callable<Integer> task)
-        Future<Integer> result = null;
-        Integer sum = 0;
-
-        result = threadPool.submit(c);
-        sum = result.get();
-        System.out.println("sum=" + sum);
-
-        result = threadPool.submit(c2);
-        sum = result.get();
-        System.out.println("sum=" + sum);
-
-        //关闭线程池(可以不关闭)
-
-        Long endTime = System.currentTimeMillis();
-        Long time = endTime - startTime;
-        System.out.println("多线程计算耗时：" + time);
-    }
 }
