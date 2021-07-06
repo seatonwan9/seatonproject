@@ -2,7 +2,7 @@ package com.xearth.sp.seatonproject.controller;
 
 import com.xearth.sp.seatonproject.pojo.User;
 import com.xearth.sp.seatonproject.pojo.projection.UserProjection;
-import com.xearth.sp.seatonproject.result.JSONResult;
+import com.xearth.sp.seatonproject.result.ResultData;
 import com.xearth.sp.seatonproject.service.RedisService;
 import com.xearth.sp.seatonproject.service.UserService;
 import io.swagger.annotations.Api;
@@ -35,9 +35,9 @@ public class UserController {
      */
     @ApiOperation(value = "实体类查询所有用户", notes = "")
     @GetMapping(value = "/findAll")
-    public List<User> findAll() {
+    public ResultData<List<User>> findAll() {
         List<User> list = userService.findAll();
-        return list;
+        return ResultData.data(list);
     }
 
     /**
@@ -46,9 +46,9 @@ public class UserController {
      */
     @ApiOperation(value = "实体类查询所有用户", notes = "")
     @GetMapping(value = "/findAllUser")
-    public List<UserProjection> findAllUser() {
+    public ResultData<List<UserProjection>> findAllUser() {
         List<UserProjection> list = userService.findAllUser();
-        return list;
+        return ResultData.data(list);
     }
 
     /**
@@ -60,12 +60,12 @@ public class UserController {
      */
     @ApiOperation(value = "分页条件查询用户", notes = "传入参数userName，参数可为空")
     @PostMapping("/findUsersByParamByPageable")
-    public JSONResult findUsersByParamByPageable(
+    public ResultData<Page<User>> findUsersByParamByPageable(
             @RequestParam(required = false) String userName,
             @RequestParam(required = false) Integer page,
             @RequestParam(required = false) Integer size) {
         Page<User> list = userService.findUsersByParamByPageable(userName, page, size);
-        return  JSONResult.success(list);
+        return ResultData.data(list);
     }
 
     /**
@@ -73,7 +73,7 @@ public class UserController {
      */
     @ApiOperation(value = "批量新增", notes = "")
     @PostMapping(value = "/saveAll")
-    public void saveAll() {
+    public ResultData saveAll() {
         Long startTime = System.currentTimeMillis();
         List<User> userList = new ArrayList<>();
         for(int i = 0; i < 100; i++) {
@@ -88,6 +88,7 @@ public class UserController {
         Long endTime = System.currentTimeMillis();
         Long time = endTime - startTime;
         System.out.println("saveAll耗时：" + time);
+        return ResultData.success("添加成功");
     }
 
     /**
@@ -95,7 +96,7 @@ public class UserController {
      */
     @ApiOperation(value = "批量新增（优化）", notes = "")
     @PostMapping(value = "/batchInsert")
-    public void batchInsert() {
+    public ResultData batchInsert() {
         Long startTime = System.currentTimeMillis();
         List<User> userList = new ArrayList<>();
         for(int i = 0; i < 100; i++) {
@@ -110,6 +111,7 @@ public class UserController {
         Long endTime = System.currentTimeMillis();
         Long time = endTime - startTime;
         System.out.println("batchInsert耗时：" + time);
+        return ResultData.success("添加成功");
     }
 
     /**
@@ -118,12 +120,12 @@ public class UserController {
      */
     @ApiOperation(value = "Redis缓存对象", notes = "")
     @GetMapping(value = "/setCacheData")
-    public String setCacheData() {
-        List<User> list = findAll();
+    public ResultData setCacheData() {
+        List<User> list = (List<User>) findAll();
         for(int i = 0, len = list.size(); i < len; i++) {
             redisService.set("" + list.get(i).getUserId(), list.get(i));
         }
-        return "success";
+        return ResultData.success("缓存成功");
     }
 
     /**
@@ -131,9 +133,8 @@ public class UserController {
      * @param key
      * @return
      */
-    @GetMapping(value = "/getCacheData")
-    public Object getCacheData(String key) {
-        return redisService.get(key);
+    @PostMapping(value = "/getCacheData")
+    public ResultData getCacheData(@RequestParam String key) {
+        return ResultData.data(redisService.get(key));
     }
-
 }

@@ -27,9 +27,9 @@ public class CallableDemo implements Callable<String> {
         int sum2 = x + y + 1;
         String ThreadName = Thread.currentThread().getName();
         System.out.println("name：" + name + " sum1：" + sum);
-        Thread.sleep(5000);
+        Thread.sleep(1000);
         System.out.println("name：" + name + " sum2：" + sum2);
-        return name + "：success";
+        return ThreadName;
     }
 
 }

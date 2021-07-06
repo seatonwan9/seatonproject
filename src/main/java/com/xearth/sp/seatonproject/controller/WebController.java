@@ -1,14 +1,14 @@
 package com.xearth.sp.seatonproject.controller;
 
+import com.alibaba.fastjson.JSONArray;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.HashMap;
 import java.util.Stack;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
+import java.util.concurrent.*;
 
 /**
  * @author wangxudong
@@ -19,8 +19,9 @@ import java.util.concurrent.Future;
 public class WebController {
 
     @RequestMapping("/map")
-    public String map() {
-        return "map";
+    public ModelAndView map() {
+        ModelAndView view = new ModelAndView("map");
+        return view;
     }
 
     @RequestMapping("index")
@@ -71,14 +72,55 @@ public class WebController {
         CallableDemo c1 = new CallableDemo(1, 1, "线程1");
         CallableDemo c2 = new CallableDemo(2, 2, "线程2");
 
-        Future<String> f1 = threadPool.submit(c1);
-        Future<String> f2 = threadPool.submit(c2);
-        System.out.println(f1.get()); // 获取异步执行的结果，如果没有结果可用，此方法会阻塞直到异步计算完成
-        System.out.println(f2.get());
+//        Future<String> f1 = threadPool.submit(c1); // 提交到线程
+//        Future<String> f2 = threadPool.submit(c2);
+//
+//        System.out.println(f1.get()); // 获取异步执行的结果，如果没有结果可用，此方法会阻塞直到异步计算完成
+//        System.out.println(f2.get());
+
+
+        FutureTask<String> ft1 = new FutureTask<>(c1); // 添加Callable
+        FutureTask<String> ft2 = new FutureTask<>(c2);
+        threadPool.submit(ft1); // 提交到线程
+        threadPool.submit(ft2);
+
+//        ConcurrentHashMap<String, FutureTask<String>> map = new ConcurrentHashMap<>();
+//        map.putIfAbsent("ft1", ft1);
+//        map.putIfAbsent("ft2", ft2);
+//        System.out.println(map.get("ft1").get());
+//        System.out.println(map.get("ft2").get());
+        System.out.println(ft1.get());
+        System.out.println(ft2.get());
+
 
         Long endTime = System.currentTimeMillis();
         Long time = endTime - startTime;
         System.out.println("多线程计算耗时：" + time);
+    }
+
+    /**
+     * 异步多线程
+     */
+    public static void threadAsynCompute() {
+        // 异步多线程
+        System.out.println("===========开始：");
+        Long startTime = System.currentTimeMillis();
+        // 创建线程池
+        ExecutorService fixedThreadPool = Executors.newFixedThreadPool(3);
+        CallableAsynDemo cad = null;
+
+        for (int i = 0, len = 3; i < len; i++) {
+            cad = new CallableAsynDemo("测试：" + i);
+            CompletableFuture.supplyAsync(cad, fixedThreadPool).whenComplete((result, e) -> {
+                System.out.println("结果：" + result);
+                Long endTime = System.currentTimeMillis();
+                Long time = endTime - startTime;
+                System.out.println("==========累计耗时：" + time);
+            }).exceptionally((e) -> {
+                System.out.println(e);
+                return null;
+            });
+        }
     }
 
     /**
@@ -97,6 +139,7 @@ public class WebController {
 
 //        isValid("([])");
 
-        threadCompute();
+//        threadCompute();
+        threadAsynCompute();
     }
 }
