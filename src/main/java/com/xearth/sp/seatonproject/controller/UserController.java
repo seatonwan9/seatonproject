@@ -12,6 +12,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -78,7 +79,7 @@ public class UserController {
         List<User> userList = new ArrayList<>();
         for(int i = 0; i < 100; i++) {
             User user = new User();
-            user.setCompanyId(100001);
+//            user.setCompanyId(100001);
             user.setUserName("seaton" + i);
             user.setUserAge(25);
             user.setUserPhone("15101660166");
@@ -101,7 +102,7 @@ public class UserController {
         List<User> userList = new ArrayList<>();
         for(int i = 0; i < 100; i++) {
             User user = new User();
-            user.setCompanyId(100001);
+//            user.setCompanyId(100001);
             user.setUserName("seaton" + i);
             user.setUserAge(25);
             user.setUserPhone("15101660166");
@@ -123,7 +124,7 @@ public class UserController {
     public ResultData setCacheData() {
         List<User> list = (List<User>) findAll();
         for(int i = 0, len = list.size(); i < len; i++) {
-            redisService.set("" + list.get(i).getUserId(), list.get(i));
+            redisService.set("" + list.get(i).getId(), list.get(i));
         }
         return ResultData.success("缓存成功");
     }
@@ -136,5 +137,12 @@ public class UserController {
     @PostMapping(value = "/getCacheData")
     public ResultData getCacheData(@RequestParam String key) {
         return ResultData.data(redisService.get(key));
+    }
+
+
+    @GetMapping(value = "/getUsers")
+    public ResultData getUsers() {
+        List<User> list = userService.findAll();
+        return ResultData.data(list);
     }
 }

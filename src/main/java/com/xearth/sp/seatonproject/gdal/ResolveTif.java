@@ -13,6 +13,10 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 
+import org.gdal.gdal.gdal;
+import org.gdal.gdalconst.gdalconstConstants;
+import org.gdal.ogr.*;
+
 /**
  * 解析Tif图为GeoJSON
  */

@@ -1,17 +1,27 @@
 package com.xearth.sp.seatonproject.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.annotations.ManyToAny;
+
 import javax.persistence.*;
+import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
+@DynamicInsert
+@DynamicUpdate
 @Table(name = "user")
-public class User {
+public class User implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "user_id")
-    private Integer userId;
+    @Column(name = "id")
+    private Integer id;
 
-    @Column(name = "company_id")
-    private Integer companyId;
+//    @Column(name = "company_id")
+//    private Integer companyId;
 
     @Column(name = "user_name")
     private String userName;
@@ -22,32 +32,26 @@ public class User {
     @Column(name = "user_phone")
     private String userPhone;
 
-    public User() {
+//    @JsonIgnore
+    @ManyToOne(targetEntity = Company.class, fetch = FetchType.EAGER)
+    @JoinColumn(name = "company_id", referencedColumnName = "id")
+    private Company company;
+
+    public Integer getId() {
+        return id;
     }
 
-    public User(Integer userId, Integer companyId, String userName, Integer userAge, String userPhone) {
-        this.userId = userId;
-        this.companyId = companyId;
-        this.userName = userName;
-        this.userAge = userAge;
-        this.userPhone = userPhone;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
-    public Integer getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Integer userId) {
-        this.userId = userId;
-    }
-
-    public Integer getCompanyId() {
-        return companyId;
-    }
-
-    public void setCompanyId(Integer companyId) {
-        this.companyId = companyId;
-    }
+//    public Integer getCompanyId() {
+//        return companyId;
+//    }
+//
+//    public void setCompanyId(Integer companyId) {
+//        this.companyId = companyId;
+//    }
 
     public String getUserName() {
         return userName;
@@ -73,11 +77,19 @@ public class User {
         this.userPhone = userPhone;
     }
 
+    public Company getCompany() {
+        return company;
+    }
+
+    public void setCompany(Company company) {
+        this.company = company;
+    }
+
     @Override
     public String toString() {
         return "User{" +
-                "userId=" + userId +
-                ", companyId=" + companyId +
+                "id=" + id +
+//                ", companyId=" + companyId +
                 ", userName='" + userName + '\'' +
                 ", userAge=" + userAge +
                 ", userPhone='" + userPhone + '\'' +
