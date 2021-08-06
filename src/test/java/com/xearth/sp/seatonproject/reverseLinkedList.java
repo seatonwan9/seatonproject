@@ -1,6 +1,9 @@
 package com.xearth.sp.seatonproject;
 
 
+import java.util.Collections;
+import java.util.LinkedList;
+
 public class reverseLinkedList {
 
     /**
@@ -22,20 +25,20 @@ public class reverseLinkedList {
 
     /**
      * 遍历
-     * @param node
+     * @param head
      * @return
      */
-    public static Node reverse2(Node node) {
-        Node pre = null;
+    public static Node reverse2(Node head) {
+        Node prev = null;
         Node next = null;
-        while (node != null) {
-            next = node.next;
+        while (head != null) {
+            next = head.next;
             // 改变指向
-            node.next = pre;
-            pre = node;
-            node = next;
+            head.next = prev;
+            prev = head;
+            head = next;
         }
-        return pre;
+        return prev;
     }
 
     public static void main(String[] args) {
@@ -63,5 +66,22 @@ public class reverseLinkedList {
         }
 
         System.out.println();
+
+//        LinkedList<Integer> linkedList = new LinkedList<>();
+//        linkedList.add(1);
+//        linkedList.add(2);
+//        linkedList.add(3);
+//        linkedList.add(4);
+//
+//        linkedList.forEach(obj -> {
+//            System.out.print(obj + "->");
+//        });
+//
+//        System.out.println();
+//
+//        Collections.reverse(linkedList);
+//        linkedList.forEach(obj -> {
+//            System.out.print(obj + "->");
+//        });
     }
 }
