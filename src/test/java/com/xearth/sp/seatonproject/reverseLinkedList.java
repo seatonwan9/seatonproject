@@ -15,9 +15,8 @@ public class reverseLinkedList {
         if (head == null || head.next == null)
             return head;
         Node temp = head.next;
-//        System.out.println(temp);
         // 相当于压栈，先进后出的原则
-        Node newHead = reverse(head.next);
+        Node newHead = reverse(temp);
         temp.next = head;
         head.next = null;
         return newHead;
