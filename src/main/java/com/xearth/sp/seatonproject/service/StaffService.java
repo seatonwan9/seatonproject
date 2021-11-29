@@ -14,4 +14,8 @@ import java.util.List;
 public interface StaffService {
 
     void saveBatch(List<Staff> list);
+
+    void emInsertBatch(List<Staff> list);
+
+    void jdbcInsertBatch(List<Staff> list);
 }
