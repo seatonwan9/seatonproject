@@ -1,6 +1,8 @@
 package com.xearth.sp.seatonproject.service.impl;
 
+import com.xearth.sp.seatonproject.dao.StaffDao;
 import com.xearth.sp.seatonproject.dao.UserDao;
+import com.xearth.sp.seatonproject.pojo.Staff;
 import com.xearth.sp.seatonproject.pojo.User;
 import com.xearth.sp.seatonproject.pojo.projection.UserProjection;
 import com.xearth.sp.seatonproject.service.UserService;
@@ -9,7 +11,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.client.RestClientException;
 
 import java.util.List;
 
@@ -19,6 +23,9 @@ public class UserServiceImpl extends BaseServiceImpl<UserDao, User, Integer> imp
 
     @Autowired
     UserDao userDao;
+
+    @Autowired
+    StaffDao staffRepository;
 
     @Override
     public void batchInsert(List<User> user) {
@@ -42,5 +49,4 @@ public class UserServiceImpl extends BaseServiceImpl<UserDao, User, Integer> imp
         Pageable pageable = PageRequest.of(page, size);
         return userDao.findUsersByParamByPageable(userName, pageable);
     }
-
 }

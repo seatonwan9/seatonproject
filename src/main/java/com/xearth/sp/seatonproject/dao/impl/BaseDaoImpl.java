@@ -1,6 +1,6 @@
 package com.xearth.sp.seatonproject.dao.impl;
 
-import com.xearth.sp.seatonproject.dao.BaseRepository;
+import com.xearth.sp.seatonproject.dao.BaseDao;
 import org.springframework.data.jpa.repository.support.JpaEntityInformation;
 import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,18 +15,18 @@ import java.util.Iterator;
  */
 @Transactional
 @SuppressWarnings("SpringJavaConstructorAutowiringInspection")
-public class BaseRepositoryImpl<T, ID extends Serializable> extends SimpleJpaRepository<T, ID> implements BaseRepository<T, ID> {
+public class BaseDaoImpl<T, ID extends Serializable> extends SimpleJpaRepository<T, ID> implements BaseDao<T, ID> {
 
     private static final int BATCH_SIZE = 20000;
 
     private EntityManager entityManager;
 
-    public BaseRepositoryImpl(JpaEntityInformation<T, ?> entityInformation, EntityManager entityManager) {
+    public BaseDaoImpl(JpaEntityInformation<T, ?> entityInformation, EntityManager entityManager) {
         super(entityInformation, entityManager);
         this.entityManager = entityManager;
     }
 
-    public BaseRepositoryImpl(Class<T> domainClass, EntityManager entityManager) {
+    public BaseDaoImpl(Class<T> domainClass, EntityManager entityManager) {
         super(domainClass, entityManager);
         this.entityManager = entityManager;
     }

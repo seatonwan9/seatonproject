@@ -12,6 +12,6 @@ import org.springframework.stereotype.Repository;
  * @Version 1.0
  **/
 @Repository
-public interface StaffRepository extends JpaRepositoryImplementation<Staff, Integer> {
+public interface StaffDao extends JpaRepositoryImplementation<Staff, Integer> {
 
 }

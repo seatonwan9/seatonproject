@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface UserDao extends BaseRepository<User, Integer> {
+public interface UserDao extends BaseDao<User, Integer> {
 
     /**
      * Vo

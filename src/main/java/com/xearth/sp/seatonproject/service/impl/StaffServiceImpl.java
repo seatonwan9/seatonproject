@@ -1,6 +1,6 @@
 package com.xearth.sp.seatonproject.service.impl;
 
-import com.xearth.sp.seatonproject.dao.StaffRepository;
+import com.xearth.sp.seatonproject.dao.StaffDao;
 import com.xearth.sp.seatonproject.pojo.Staff;
 import com.xearth.sp.seatonproject.service.StaffService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +21,7 @@ import java.util.List;
 public class StaffServiceImpl implements StaffService {
 
     @Autowired
-    StaffRepository staffRepository;
+    StaffDao staffRepository;
 
     @Override
     public void saveBatch(List<Staff> list) {
